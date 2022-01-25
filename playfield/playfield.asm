@@ -29,5 +29,5 @@ NEXT_FRAME:
     jmp NEXT_FRAME
 
     org $FFFC ; End the ROM by adding required values to memory position $FFFC
-    .word START ; Put 2 bytes with the reset address at memory position $FFFC
-    .word START ; Put 2 bytes with the break address at memory position $FFFE
+    .word RESET ; Put 2 bytes with the reset address at memory position $FFFC
+    .word RESET ; Put 2 bytes with the break address at memory position $FFFE
