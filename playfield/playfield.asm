@@ -47,9 +47,53 @@ NEXT_FRAME:
     stx PF1
     stx PF2
     REPEAT 7
+        sta WSYNC ; next scanline please
+    REPEND
+
+    ldx #%11100000
+    stx PF0
+
+    ldx #%11111111
+    stx PF1
+    stx PF2
+
+    REPEAT 7
         sta WSYNC
     REPEND
 
+    ldx #%11100000
+    stx PF0
+
+    ldx #0
+    stx PF1
+    stx PF2
+
+    REPEAT 164
+        sta WSYNC
+    REPEND
+
+    ldx #%11100000
+    stx PF0
+
+    ldx #%11111111
+    stx PF1
+    stx PF2
+
+    REPEAT 7
+        sta WSYNC
+    REPEND
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 30 lines for the overscan..
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    lda #2
+    sta VBLANK
+
+    REPEAT 30
+       sta WSYNC
+    REPEND
+    lda #0
+    sta VBLANK
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Complete the ROM size 4Kb
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
