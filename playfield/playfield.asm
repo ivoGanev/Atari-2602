@@ -18,9 +18,37 @@ RESET:
 ;; Start a new frame by turning on VBLANC and VSYNC
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 NEXT_FRAME:
-    lda #02   
+    lda #02
     sta VBLANK ; turn on VBLANK
     sta VSYNC  ; turn on VSYNC
+
+    REPEAT 3
+        sta WSYNC
+    REPEND
+
+    lda #0
+    sta VSYNC ; turn off VSYNC
+
+    REPEAT 37
+        sta WSYNC ;
+    REPEND
+    lda #0
+    sta VBLANK ; turn off VBLANK
+
+    ldx #%00000001 ; CTRLPF register to allow reflection
+    stx CTRLPF
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Let's start drawing on the screen finally :)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ldx #0 ; draw the first 7 lines as backgroung by skipping to set the PF
+    stx PF0 
+    stx PF1
+    stx PF2
+    REPEAT 7
+        sta WSYNC
+    REPEND
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Complete the ROM size 4Kb
